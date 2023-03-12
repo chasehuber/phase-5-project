@@ -13,7 +13,7 @@ function Chatroom() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    await fetch('http://localhost:3000/messages', {
+    await fetch('/messages', {
       method: 'POST',
       mode: 'cors',
       headers: {
