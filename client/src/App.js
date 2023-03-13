@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Chatroom from "./components/Chatroom";
 
-function App() {
+function App({cable}) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="App">
       <h1>Page Count: {count}</h1>
-      <Chatroom/>
+      <Chatroom cable={cable}/>
     </div>
   );
 }

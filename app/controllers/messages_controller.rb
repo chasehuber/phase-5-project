@@ -4,8 +4,8 @@ class MessagesController < ApplicationController
     render json: messages, status: :ok
   end
 
-  def create
-    Message.create(content: params[:message])
-    ActionCable.server.broadcast('messages', { messages: Message.all })
+  def create_message
+    message = Message.new_message(params)
+    render json: message, status: :created
   end
 end

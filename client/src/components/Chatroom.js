@@ -1,27 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import MessagesChannel from '../channels/chat_channel';
 
-function Chatroom() {
+function Chatroom({ cable }) {
+
   const [messages, setMessages] = useState([]);
-  const [message, setMessage] = useState('');
+  const [input, setInput] = useState('');
   const [username, setUsername] = useState([]);
 
   useEffect(() => {
-    MessagesChannel.received = (data) => setMessages(data.messages)
-  }, [])
+    cable.subscriptions.create({channel: "ChatChannel", room: "testing"},
+    {received(data) {
+      setMessages([...messages, data.content])
+    }})
+  })
 
-  const handleSubmit = async (e) => {
+  function handleSubmit(e){
     e.preventDefault()
 
-    await fetch('/messages', {
+    fetch('/create_message', {
       method: 'POST',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ message })
-    })
-    setMessage('');
+      body: JSON.stringify({ content: input, room: "testing", user_id: 1 })
+    }).then(console.log(input))
+    // setMessage('');
   }
 
   // const handleLogin = async (e) => {
@@ -41,12 +44,12 @@ function Chatroom() {
 
   return (
     <div>
-      <input type='text' value={message} onChange={(e) => setMessage(e.target.value)}/>
+      <input type='text' onChange={(e) => setInput(e.target.value)}/>
       <button onClick={handleSubmit}>Send message</button>
 
       <ul>
         {messages.map((message) => (
-          <li key={message.id}>{message.content}</li>
+          <li key={message}>{message}</li>
         ))}
       </ul>
 
