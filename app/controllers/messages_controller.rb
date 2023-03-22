@@ -1,11 +1,13 @@
 class MessagesController < ApplicationController
-  def index
-    messages = Message.all
-    render json: messages, status: :ok
+  before_action :authorized
+  def create
+    message = Message.new_message(message_params)
+    render json: message, status: :created
   end
 
-  def create
-    Message.create(content: params[:message])
-    ActionCable.server.broadcast('messages', { messages: Message.all })
+  private
+
+  def message_params
+    params.permit(:content, :user_id, :chatroom_id, :room_id)
   end
 end

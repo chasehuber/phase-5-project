@@ -1,8 +1,11 @@
 development:
-  adapter: postgresql
+  adapter: async
+  # url: redis://localhost:6379
 
 test:
   adapter: test
 
 production:
-  adapter: postgresql
+  adapter: redis
+  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/" } %>
+  channel_prefix: phase_5_db_production
