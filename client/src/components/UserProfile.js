@@ -72,8 +72,11 @@ function UserProfile({ editForm }) {
   else{
     return (
       <div className="p-1">
+        <h1>Username:</h1>
         <h1>{user.username}</h1>
+        <h1>Email:</h1>
         <h1>{user.email}</h1>
+        <h1>Bio:</h1>
         <h1>{user.bio}</h1>
       </div>
     )
