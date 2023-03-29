@@ -11,7 +11,7 @@ function Message({ message }) {
     fetch(`/users/${message.user_id}`)
     .then(res => res.json())
     .then(data => setSender(data.username))
-  },[setSender])
+  },[setSender, message.user_id])
 
   function handleShowProfile(e) {
     e.preventDefault();

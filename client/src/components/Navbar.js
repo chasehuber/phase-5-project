@@ -12,7 +12,7 @@ function NavBar({ editForm, setEditForm }) {
         res.json().then(user => setUser(user))
       }
     })
-  }, []);
+  }, [setUser]);
 
   async function handleLogout() {
     await fetch("/logout", {

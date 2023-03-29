@@ -29,7 +29,7 @@ function Chatroom({ cable }) {
     {received(data) {
       setMessages([...messages, data])
     }})
-  },[setMessages, messages])
+  },[setMessages, messages, cable.subscriptions, currentChatroom.conn_id])
 
   function fetchHistory() {
     setTimeout(() =>{

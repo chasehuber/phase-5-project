@@ -22,6 +22,10 @@ function SignUpPage() {
       if(res.status === 201) {
         window.location.reload(history.push("/login"))
       }
+      else {
+        // Sloppy, but I ran out of time for error rendering
+        alert("Please fill out all fields")
+      }
     })
   }
 

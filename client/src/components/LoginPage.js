@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../context/user";
 
@@ -25,6 +25,10 @@ function LoginPage({ setCurrentUser }) {
         .then(data => console.log(data))
         .then(data => setUser(data))
         .then(window.location.reload(history.push("/")))
+      }
+      // There are also sloppy, but again, no time for error handling
+      else {
+        alert("Incorrect username or password")
       }
     })
     setUsername('')
