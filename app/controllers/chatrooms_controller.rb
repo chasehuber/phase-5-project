@@ -8,7 +8,7 @@ class ChatroomsController < ApplicationController
   end
 
   def show
-    chatroom = Chatroom.find_by!(id: params[:id])
+    chatroom = Chatroom.find_by!(conn_id: params[:id])
     render json: chatroom, status: :ok
   end
 
@@ -17,8 +17,15 @@ class ChatroomsController < ApplicationController
     render json: chatroom, status: :created
   end
 
+  def destroy
+    chatroom = Chatroom.find_by!(conn_id: params[:id])
+    chatroom.destroy
+    head :no_content
+  end
+
   def load_history
-    messages = Message.all.where(chatroom_id: params[:id])
+    chatroom = Chatroom.find_by!(conn_id: params[:id])
+    messages = Message.all.where(chatroom_id: chatroom.id)
     render json: messages, status: :ok
   end
 

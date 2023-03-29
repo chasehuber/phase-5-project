@@ -1,13 +1,32 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.basic-box {
+  @apply border-2 border-solid border-black
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.navbar-button-sm {
+  @apply flex basic-box text-center justify-center items-center col-span-2 
+}
+
+.navbar-button-lg {
+  @apply flex basic-box text-center justify-center items-center col-span-4
+}
+
+.message {
+  @apply border-2 border-black break-words mt-1 p-1
+}
+
+.message-box {
+  @apply border-2 border-black
+}
+
+.signup-page {
+  @apply border-2 border-black p-1 order-2 row-start-2 row-span-4 col-span-3
+}
+
+.bio {
+  @apply border-2 border-black resize-none w-full h-48 p-1
 }

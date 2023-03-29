@@ -7,5 +7,5 @@ class User < ApplicationRecord
 
   validates :username, presence: true, uniqueness: true, length: { minimum: 3 }
   validates :email, presence: true, uniqueness: { case_sensitive: false }, format: { with: VALID_EMAIL_REGEX, multiline: true}
-  validates :password, presence: true, length: { in: 5..30 }
+  validates :password, presence: true, length: { in: 5..30 }, unless: -> (user){user.id.present?}
 end

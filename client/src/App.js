@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Switch, Route, } from "react-router-dom";
 import LoginPage from "./components/LoginPage"
 import Chatroom from "./components/Chatroom";
@@ -7,47 +7,55 @@ import NavBar from "./components/Navbar";
 import HomePage from "./components/HomePage";
 import SignUpPage from "./components/SignUpPage";
 import NewChatroom from "./components/NewChatroom";
-
+import { UserProvider } from "./context/user";
 
 function App({ cable }) {
-  const [currentUser, setCurrentUser] = useState(null);
   const [currentChatroom, setCurrentChatroom] = useState([]);
-
-  useEffect(() => {
-    fetch('/me').then((res) => {
-      if (res.ok) {
-        res.json().then(user => setCurrentUser(user))
-      }
-    })
-  }, []);
+  const [editForm, setEditForm] = useState(false);
 
   return (
-    <div>
-      <NavBar currentUser={currentUser}/>
-      <Switch>
-        <Route path="/login">
-          <LoginPage setCurrentUser={setCurrentUser}/>
-        </Route>
-        <Route path="/chatrooms/:id">
-          <Chatroom cable={cable} currentChatroom={currentChatroom} currentUser={currentUser}/>
-        </Route>
-        <Route path="/profile">
-          <UserProfile currentUser={currentUser} />
-        </Route>
-        <Route path="/signup">
-          <SignUpPage/>
-        </Route>
-        <Route path="/new-chatroom">
-          <NewChatroom currentUser={currentUser} />
-        </Route>
-        <Route path="/">
-          <HomePage setCurrentChatroom={setCurrentChatroom}/>
-        </Route>
-      </Switch>
-      {/* <div>
-        <h2>Current user: {currentUser ? currentUser.username : null}</h2>
-        <h2>Current chatroom: {currentChatroom.title}</h2>
-      </div> */}
+    <div className="basic-box bg-orange-300 p-1 min-h-96 h-[46rem] w-2/3 mx-auto my-10 font-mono shadow-xl">
+      <UserProvider className>
+        <div className="h-full basic-box grid grid-cols-3 grid-rows-6 gap-2 p-2 bg-white">
+          <div className="basic-box col-span-1 row-span-1 order-1 p-1 bg-blue-400">
+            <div className="flex basic-box w-full h-full justify-center items-center text-4xl bg-white">
+              <h1>Vomit Page</h1>
+            </div>
+          </div>
+          <Switch>
+            <Route path="/login">
+              <LoginPage/>
+            </Route>
+            <Route path="/chatrooms/:id">
+              <Chatroom cable={cable}/>
+              <div className="basic-box row-span-4 row-start-2 col-span-1 order-2 p-1 bg-red-400">
+                <div className="basic-box h-full bg-white">
+                  <UserProfile editForm={editForm}/>
+                </div>
+              </div>
+            </Route>
+            <Route path="/signup">
+              <SignUpPage/>
+            </Route>
+            <Route path="/new-chatroom">
+              <NewChatroom/>
+            </Route>
+            <Route path="/">
+              <div className="basic-box col-span-2 row-span-6 order-3">
+                <HomePage setCurrentChatroom={setCurrentChatroom} />
+              </div>
+              <div className="basic-box row-span-4 row-start-2 col-span-1 order-2 p-1 bg-red-400">
+                <div className="basic-box h-full bg-white">
+                  <UserProfile editForm={editForm}/>
+                </div>
+              </div>
+            </Route>
+          </Switch>
+          <div className="row-span-1 col-span-1 row-start-6 order-4">
+            <NavBar editForm={editForm} setEditForm={setEditForm}/>
+          </div>
+        </div>
+      </UserProvider>
     </div>
   );
 }
